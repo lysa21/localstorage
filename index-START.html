@@ -29,31 +29,32 @@
   //localStorage.clear()
   const addItems = document.querySelector('.add-items')
   const itemsList = document.querySelector('.plates')
-
-  let histories = JSON.parse(localStorage.getItem('ingrédients')) || [];
-  console.log(histories)
-  histories.forEach((ingredient) => {
+  renderIngredient = (ingredient, i) => {
     console.log(ingredient)
-    itemsList.innerHTML += `
-    <label for='ing'>de</label><input id='ing' type="checkbox" checked> <div><li>
-       ${ingredient['name']}</li>`
+    itemsList.innerHTML += `<div>
+      <input id='ingredient${i}' type="checkbox">
+      <label data-i=${i} for='ingredient${i}' ></label>
+      <li> ${ingredient.name}</li>
+    </div>`
+  }
+  let histories = JSON.parse(localStorage.getItem('ingrédients')) || [];
+  histories.forEach((ingredient, i) => {
+    renderIngredient(ingredient, i)
   })
 
-  console.log(addItems)
   addItems.addEventListener('submit', function(e) {
     e.preventDefault();
     let newIngredient = {
-      isDone:false,
+      isDone:true,
       name: this.firstElementChild.value
     }
-    itemsList.innerHTML += `<label>de</label><div><input type="checkbox" checked><li> ${this.firstElementChild.value}</li></div>`
-    console.log(this.firstElementChild.value)
+    renderIngredient(newIngredient, itemsList.length + 1)
     histories.push(newIngredient)
     this.firstElementChild.value = '';
-
     localStorage.setItem('ingrédients', JSON.stringify(histories))
-
   })
+//https://gomakethings.com/checking-event-target-selectors-with-event-bubbling-in-vanilla-javascript/
+  
   
 </script>
 
