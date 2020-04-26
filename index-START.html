@@ -31,7 +31,7 @@
   const itemsList = document.querySelector('.plates')
   renderIngredient = (ingredient, i) => {
     console.log(ingredient)
-    itemsList.innerHTML += `<div>
+    itemsList.innerHTML += `<div class='ingredient'>
       <input id='ingredient${i}' type="checkbox">
       <label data-i=${i} for='ingredient${i}' ></label>
       <li> ${ingredient.name}</li>
@@ -41,6 +41,7 @@
   histories.forEach((ingredient, i) => {
     renderIngredient(ingredient, i)
   })
+  
 
   addItems.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -48,7 +49,9 @@
       isDone:true,
       name: this.firstElementChild.value
     }
-    renderIngredient(newIngredient, itemsList.length + 1)
+    let total = document.getElementsByClassName('ingredient').length;
+    console.log(total)
+    renderIngredient(newIngredient, total + 1)
     histories.push(newIngredient)
     this.firstElementChild.value = '';
     localStorage.setItem('ingrédients', JSON.stringify(histories))
